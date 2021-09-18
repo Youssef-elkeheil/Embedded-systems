@@ -1,8 +1,8 @@
-#include "STD_TYPES.h"
-#include "BIT_MATH.h"
+#include "../../01- LIB/STD_TYPES.h"
+#include "../../01- LIB/BIT_MATH.h"
 
 #include "DIO_interface.h"
-#include "DIO_private.h"
+#include "DIO_registers.h"
 
 void MDIO_voidSetPortDirection(u8 copy_u8PortId, u8 copy_u8PortDirection)
 {
@@ -125,151 +125,160 @@ void MDIO_voidSetPortValue(u8 copy_u8PortId, u8 copy_u8PortValue)
 }
 
 
-void MDIO_voidSetPinDirection(u8 copy_u8PortId, u8 copy_u8PinId, u8 copy_u8PinDirection)
+void MDIO_voidSetPinDirection(u8 copy_u8PinId, u8 copy_u8PinDirection)
 {
-	switch(copy_u8PortId)
+	if (copy_u8PinId >= PINA0 && copy_u8PinId <= PINA7) /* from PINA0 to PINA7  */
 	{
-		case PORTA: if(copy_u8PinDirection == OUTPUT)
-		            {
-		                SET_BIT(DDRA_REG, copy_u8PinId);	
-		            }
-					else if(copy_u8PinDirection == INPUT)
-					{
-						CLR_BIT(DDRA_REG, copy_u8PinId);
-					}
-					else
-					{
-						//error
-					}
-					break;
-		case PORTB: if(copy_u8PinDirection == OUTPUT)
-		            {
-		                SET_BIT(DDRB_REG, copy_u8PinId);	
-		            }
-					else if(copy_u8PinDirection == INPUT)
-					{
-						CLR_BIT(DDRB_REG, copy_u8PinId);
-					}
-					else
-					{
-						//error
-					}
-					break;
-		case PORTC: if(copy_u8PinDirection == OUTPUT)
-		            {
-		                SET_BIT(DDRC_REG, copy_u8PinId);	
-		            }
-					else if(copy_u8PinDirection == INPUT)
-					{
-						CLR_BIT(DDRC_REG, copy_u8PinId);
-					}
-					else
-					{
-						//error
-					}
-					break;
-		case PORTD: if(copy_u8PinDirection == OUTPUT)
-		            {
-		                SET_BIT(DDRD_REG, copy_u8PinId);	
-		            }
-					else if(copy_u8PinDirection == INPUT)
-					{
-						CLR_BIT(DDRD_REG, copy_u8PinId);
-					}
-					else
-					{
-						//error
-					}
-					break;
-		default: /* invalid port id  */ break;
+		if (copy_u8PinDirection == OUTPUT)
+		{
+			SET_BIT(DDRA_REG, copy_u8PinId);
+		}
+		else if (copy_u8PinDirection == INPUT)
+		{
+			CLR_BIT(DDRA_REG, copy_u8PinId);
+		}
+		else
+		{
+			//error
+		}
+	}
+	else if (copy_u8PinId <= PINB7) /* from PINB0 to PINB7  */
+	{
+		if (copy_u8PinDirection == OUTPUT)
+		{
+			SET_BIT(DDRB_REG, copy_u8PinId);
+		}
+		else if (copy_u8PinDirection == INPUT)
+		{
+			CLR_BIT(DDRB_REG, copy_u8PinId);
+		}
+		else
+		{
+			//error
+		}
+	}
+	else if (copy_u8PinId <= PINC7) /* from PINC0 to PINC7  */
+	{
+		if (copy_u8PinDirection == OUTPUT)
+		{
+			SET_BIT(DDRC_REG, copy_u8PinId);
+		}
+		else if (copy_u8PinDirection == INPUT)
+		{
+			CLR_BIT(DDRC_REG, copy_u8PinId);
+		}
+		else
+		{
+			//error
+		}
+	}
+	else if (copy_u8PinId <= PIND7) /* from PIND0 to PIND7  */
+	{
+		if (copy_u8PinDirection == OUTPUT)
+		{
+			SET_BIT(DDRD_REG, copy_u8PinId);
+		}
+		else if (copy_u8PinDirection == INPUT)
+		{
+			CLR_BIT(DDRD_REG, copy_u8PinId);
+		}
+		else
+		{
+			//error
+		}
 	}
 }
 
-void MDIO_voidSetPinValue(u8 copy_u8PortId, u8 copy_u8PinId, u8 copy_u8PinValue)
+void MDIO_voidSetPinValue(u8 copy_u8PinId, u8 copy_u8PinValue)
 {
-	switch(copy_u8PortId)
+	if (copy_u8PinId >= PINA0 && copy_u8PinId <= PINA7) /* from PINA0 to PINA7  */
 	{
-		case PORTA: if(copy_u8PinValue == HIGH)
-		            {
-		                SET_BIT(PORTA_REG, copy_u8PinId);	
-		            }
-					else if(copy_u8PinValue == LOW)
-					{
-						CLR_BIT(PORTA_REG, copy_u8PinId);
-					}
-					else
-					{
-						//error
-					}
-					break;
-		case PORTB: if(copy_u8PinValue == HIGH)
-		            {
-		                SET_BIT(PORTB_REG, copy_u8PinId);	
-		            }
-					else if(copy_u8PinValue == LOW)
-					{
-						CLR_BIT(PORTB_REG, copy_u8PinId);
-					}
-					else
-					{
-						//error
-					}
-					break;
-		case PORTC: if(copy_u8PinValue == HIGH)
-		            {
-		                SET_BIT(PORTC_REG, copy_u8PinId);	
-		            }
-					else if(copy_u8PinValue == LOW)
-					{
-						CLR_BIT(PORTC_REG, copy_u8PinId);
-					}
-					else
-					{
-						//error
-					}
-					break;
-		case PORTD: if(copy_u8PinValue == HIGH)
-		            {
-		                SET_BIT(PORTD_REG, copy_u8PinId);	
-		            }
-					else if(copy_u8PinValue == LOW)
-					{
-						CLR_BIT(PORTD_REG, copy_u8PinId);
-					}
-					else
-					{
-						//error
-					}
-					break;
-		default: /* invalid port id  */ break;
+		if (copy_u8PinValue == HIGH)
+		{
+			SET_BIT(PORTA_REG, copy_u8PinId);
+		}
+		else if (copy_u8PinValue == LOW)
+		{
+			CLR_BIT(PORTA_REG, copy_u8PinId);
+		}
+		else
+		{
+			//error
+		}
+	}
+	else if (copy_u8PinId <= PINB7) /* from PINB0 to PINB7  */
+	{
+		if (copy_u8PinValue == HIGH)
+		{
+			SET_BIT(PORTB_REG, copy_u8PinId);
+		}
+		else if (copy_u8PinValue == LOW)
+		{
+			CLR_BIT(PORTB_REG, copy_u8PinId);
+		}
+		else
+		{
+			//error
+		}
+	}
+	else if (copy_u8PinId <= PINC7) /* from PINC0 to PINC7  */
+	{
+		if (copy_u8PinValue == HIGH)
+		{
+			SET_BIT(PORTC_REG, copy_u8PinId);
+		}
+		else if (copy_u8PinValue == LOW)
+		{
+			CLR_BIT(PORTC_REG, copy_u8PinId);
+		}
+		else
+		{
+			//error
+		}
+	}
+	else if (copy_u8PinId <= PIND7) /* from PIND0 to PIND7  */
+	{
+		if (copy_u8PinValue == HIGH)
+		{
+			SET_BIT(PORTD_REG, copy_u8PinId);
+		}
+		else if (copy_u8PinValue == LOW)
+		{
+			CLR_BIT(PORTD_REG, copy_u8PinId);
+		}
+		else
+		{
+			//error
+		}
 	}
 }
 
 
-void MDIO_voidTogglePinValue(u8 copy_u8PortId, u8 copy_u8PinId)
+void MDIO_voidTogglePinValue(u8 copy_u8PinId)
 {
-	switch(copy_u8PortId)
-	{
-		case PORTA: TOG_BIT(PORTA_REG, copy_u8PinId);break;
-		case PORTB: TOG_BIT(PORTB_REG, copy_u8PinId);break;
-		case PORTC: TOG_BIT(PORTC_REG, copy_u8PinId);break;
-		case PORTD: TOG_BIT(PORTD_REG, copy_u8PinId);break;
-		default: /* invalid port id */ break;
-	}
+	if (copy_u8PinId >= PINA0 && copy_u8PinId <= PINA7) /* from PINA0 to PINA7  */
+		TOG_BIT(PORTA_REG, copy_u8PinId);
+	else if (copy_u8PinId <= PINB7) /* from PINB0 to PINB7  */
+		TOG_BIT(PORTB_REG, copy_u8PinId);
+	else if (copy_u8PinId <= PINC7) /* from PINC0 to PINC7  */
+		TOG_BIT(PORTC_REG, copy_u8PinId);
+	else if (copy_u8PinId <= PIND7) /* from PIND0 to PIND7  */
+		TOG_BIT(PORTD_REG, copy_u8PinId);
 }
 
-u8   MDIO_u8GetPinValue(u8 copy_u8PortId, u8 copy_u8PinId)
+u8   MDIO_u8GetPinValue(u8 copy_u8PinId)
 {
 	u8 Local_u8PinState;
-	switch(copy_u8PortId)
-	{
-		case PORTA: Local_u8PinState = GET_BIT(PINA_REG, copy_u8PinId);break;
-		case PORTB: Local_u8PinState = GET_BIT(PINB_REG, copy_u8PinId);break;
-		case PORTC: Local_u8PinState = GET_BIT(PINC_REG, copy_u8PinId);break;
-		case PORTD: Local_u8PinState = GET_BIT(PIND_REG, copy_u8PinId);break;
-		default:  /* invalid port id */ break;
-	}
-	
+
+	if (copy_u8PinId >= PINA0 && copy_u8PinId <= PINA7) /* from PINA0 to PINA7  */
+		Local_u8PinState = GET_BIT(PINA_REG, copy_u8PinId);
+	else if (copy_u8PinId <= PINB7) /* from PINB0 to PINB7  */
+		Local_u8PinState = GET_BIT(PINB_REG, copy_u8PinId);
+	else if (copy_u8PinId <= PINC7) /* from PINC0 to PINC7  */
+		Local_u8PinState = GET_BIT(PINC_REG, copy_u8PinId);
+	else if (copy_u8PinId <= PIND7) /* from PIND0 to PIND7  */
+		Local_u8PinState = GET_BIT(PIND_REG, copy_u8PinId);
+
 	return Local_u8PinState;
 }
 

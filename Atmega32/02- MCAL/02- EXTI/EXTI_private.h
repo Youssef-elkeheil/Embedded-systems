@@ -1,19 +1,30 @@
 #ifndef	EXTI_PRIVATE_H
-#def		EXTI_PRIVATE_H
+#define	EXTI_PRIVATE_H
 
-/* Macros For Registers */
-#define EXTI_u8_MCUCR_REG		*((volatile u8*)0x55)
-#define EXTI_u8_MCUCSR_REG		*((volatile u8*)0x54)
-#define EXTI_u8_GICR_REG		*((volatile u8*)0x5B)
-#define EXTI_u8_GIFR_REG		*((volatile u8*)0x5A)
+/* EXTI0 Modes */
+#define EXTI0_MODE_LOW_LEVEL			0
+#define EXTI0_MODE_ANY_LOGICAL_CHANGE	1
+#define EXTI0_MODE_FALLING				2
+#define EXTI0_MODE_RISING				3
 
-/* Macros For MCUCR Register Bits*/
-#define		EXTI_MCUCR_ISC00_BIT		0
-#define 	EXTI_MCUCR_ISC01_BIT		1
+/* EXTI1 Modes */
+#define EXTI1_MODE_LOW_LEVEL			0<<2
+#define EXTI1_MODE_ANY_LOGICAL_CHANGE	1<<2
+#define EXTI1_MODE_FALLING				2<<2
+#define EXTI1_MODE_RISING				3<<2
 
-/* Macros For GICR Bits*/
-#define		EXTI_GICR_INT0_ENABLE		6
-#define 	EXTI_GICR_INT1_ENABLE		7
-#define 	EXTI_GICR_INT1_ENABLE		8
+/* EXTI2 Modes */
+#define EXTI2_MODE_FALLING				0<<6
+#define EXTI2_MODE_RISING				1<<6
+
+/* EXTI pins */
+#define INT0_PIN						2
+#define INT1_PIN						3
+#define INT2_PIN						2
+
+/* EXTI ports */
+#define INT0_PORT						3
+#define INT1_PORT						3
+#define INT2_PORT						1
 
 #endif

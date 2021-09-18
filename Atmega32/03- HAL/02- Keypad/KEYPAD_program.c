@@ -1,7 +1,7 @@
-#include "STD_TYPES.h"
-#include "BIT_MATH.h"
+#include "../../01- LIB/STD_TYPES.h"
+#include "../../01- LIB/BIT_MATH.h"
 
-#include "DIO_interface.h"
+#include "../../02- MCAL/01- DIO/DIO_interface.h"
 #include "util/delay.h"
 
 #include "KEYPAD_interface.h"

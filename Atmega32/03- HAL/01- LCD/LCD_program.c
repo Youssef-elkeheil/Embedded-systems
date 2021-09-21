@@ -106,6 +106,7 @@ void HLCD_voidSendString(u8 *ptr_u8_String)
 
 void HLCD_voidClearScreen()
 {
+	HLCD_voidSendCommand(LCD_DISPLAY_MODE);
 	HLCD_voidSendCommand(LCD_CLEAR);
 }
 

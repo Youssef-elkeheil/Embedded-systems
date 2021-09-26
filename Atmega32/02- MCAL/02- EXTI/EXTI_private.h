@@ -18,13 +18,8 @@
 #define EXTI2_MODE_RISING				1<<6
 
 /* EXTI pins */
-#define INT0_PIN						2
-#define INT1_PIN						3
-#define INT2_PIN						2
-
-/* EXTI ports */
-#define INT0_PORT						3
-#define INT1_PORT						3
-#define INT2_PORT						1
+#define INT0_PIN                        26
+#define INT1_PIN						27
+#define INT2_PIN						10
 
 #endif

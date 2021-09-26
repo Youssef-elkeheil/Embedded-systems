@@ -60,7 +60,6 @@ void MDIO_voidSetPortDirection(u8 copy_u8PortId, u8 copy_u8PortDirection)
 						DDRD_REG = copy_u8PortDirection;
 					}
 					break;
-		default: /* invalid port id */ break;
 	}
 }
 
@@ -120,7 +119,6 @@ void MDIO_voidSetPortValue(u8 copy_u8PortId, u8 copy_u8PortValue)
 						PORTD_REG = copy_u8PortValue;
 					}
 					break;
-		default: /* invalid port id */ break;
 	}
 }
 
@@ -137,13 +135,11 @@ void MDIO_voidSetPinDirection(u8 copy_u8PinId, u8 copy_u8PinDirection)
 		{
 			CLR_BIT(DDRA_REG, copy_u8PinId);
 		}
-		else
-		{
-			//error
-		}
+
 	}
 	else if (copy_u8PinId <= PINB7) /* from PINB0 to PINB7  */
 	{
+		copy_u8PinId -= PINB0; /* To set pins range from 0 to 7 */
 		if (copy_u8PinDirection == OUTPUT)
 		{
 			SET_BIT(DDRB_REG, copy_u8PinId);
@@ -152,13 +148,11 @@ void MDIO_voidSetPinDirection(u8 copy_u8PinId, u8 copy_u8PinDirection)
 		{
 			CLR_BIT(DDRB_REG, copy_u8PinId);
 		}
-		else
-		{
-			//error
-		}
+
 	}
 	else if (copy_u8PinId <= PINC7) /* from PINC0 to PINC7  */
 	{
+		copy_u8PinId -= PINC0; /* To set pins range from 0 to 7 */
 		if (copy_u8PinDirection == OUTPUT)
 		{
 			SET_BIT(DDRC_REG, copy_u8PinId);
@@ -167,13 +161,11 @@ void MDIO_voidSetPinDirection(u8 copy_u8PinId, u8 copy_u8PinDirection)
 		{
 			CLR_BIT(DDRC_REG, copy_u8PinId);
 		}
-		else
-		{
-			//error
-		}
+
 	}
 	else if (copy_u8PinId <= PIND7) /* from PIND0 to PIND7  */
 	{
+		copy_u8PinId -= PIND0; /* To set pins range from 0 to 7 */
 		if (copy_u8PinDirection == OUTPUT)
 		{
 			SET_BIT(DDRD_REG, copy_u8PinId);
@@ -182,10 +174,7 @@ void MDIO_voidSetPinDirection(u8 copy_u8PinId, u8 copy_u8PinDirection)
 		{
 			CLR_BIT(DDRD_REG, copy_u8PinId);
 		}
-		else
-		{
-			//error
-		}
+
 	}
 }
 
@@ -201,13 +190,11 @@ void MDIO_voidSetPinValue(u8 copy_u8PinId, u8 copy_u8PinValue)
 		{
 			CLR_BIT(PORTA_REG, copy_u8PinId);
 		}
-		else
-		{
-			//error
-		}
+
 	}
 	else if (copy_u8PinId <= PINB7) /* from PINB0 to PINB7  */
 	{
+		copy_u8PinId -= PINB0; /* To set pins range from 0 to 7 */
 		if (copy_u8PinValue == HIGH)
 		{
 			SET_BIT(PORTB_REG, copy_u8PinId);
@@ -216,13 +203,11 @@ void MDIO_voidSetPinValue(u8 copy_u8PinId, u8 copy_u8PinValue)
 		{
 			CLR_BIT(PORTB_REG, copy_u8PinId);
 		}
-		else
-		{
-			//error
-		}
+
 	}
 	else if (copy_u8PinId <= PINC7) /* from PINC0 to PINC7  */
 	{
+		copy_u8PinId -= PINC0; /* To set pins range from 0 to 7 */
 		if (copy_u8PinValue == HIGH)
 		{
 			SET_BIT(PORTC_REG, copy_u8PinId);
@@ -231,13 +216,11 @@ void MDIO_voidSetPinValue(u8 copy_u8PinId, u8 copy_u8PinValue)
 		{
 			CLR_BIT(PORTC_REG, copy_u8PinId);
 		}
-		else
-		{
-			//error
-		}
+
 	}
 	else if (copy_u8PinId <= PIND7) /* from PIND0 to PIND7  */
 	{
+		copy_u8PinId -= PIND0; /* To set pins range from 0 to 7 */
 		if (copy_u8PinValue == HIGH)
 		{
 			SET_BIT(PORTD_REG, copy_u8PinId);
@@ -246,24 +229,31 @@ void MDIO_voidSetPinValue(u8 copy_u8PinId, u8 copy_u8PinValue)
 		{
 			CLR_BIT(PORTD_REG, copy_u8PinId);
 		}
-		else
-		{
-			//error
-		}
+
 	}
 }
-
 
 void MDIO_voidTogglePinValue(u8 copy_u8PinId)
 {
 	if (copy_u8PinId >= PINA0 && copy_u8PinId <= PINA7) /* from PINA0 to PINA7  */
+	{
 		TOG_BIT(PORTA_REG, copy_u8PinId);
+	}
 	else if (copy_u8PinId <= PINB7) /* from PINB0 to PINB7  */
+	{
+		copy_u8PinId -= PINB0;
 		TOG_BIT(PORTB_REG, copy_u8PinId);
+	}
 	else if (copy_u8PinId <= PINC7) /* from PINC0 to PINC7  */
+	{
+		copy_u8PinId -= PINC0;
 		TOG_BIT(PORTC_REG, copy_u8PinId);
+	}	
 	else if (copy_u8PinId <= PIND7) /* from PIND0 to PIND7  */
+	{
+		copy_u8PinId -= PIND0;
 		TOG_BIT(PORTD_REG, copy_u8PinId);
+	}
 }
 
 u8   MDIO_u8GetPinValue(u8 copy_u8PinId)
@@ -271,15 +261,23 @@ u8   MDIO_u8GetPinValue(u8 copy_u8PinId)
 	u8 Local_u8PinState;
 
 	if (copy_u8PinId >= PINA0 && copy_u8PinId <= PINA7) /* from PINA0 to PINA7  */
+	{
 		Local_u8PinState = GET_BIT(PINA_REG, copy_u8PinId);
+	}
 	else if (copy_u8PinId <= PINB7) /* from PINB0 to PINB7  */
+	{
+		copy_u8PinId -= PINB0;
 		Local_u8PinState = GET_BIT(PINB_REG, copy_u8PinId);
+	}
 	else if (copy_u8PinId <= PINC7) /* from PINC0 to PINC7  */
+	{
+		copy_u8PinId -= PINC0;
 		Local_u8PinState = GET_BIT(PINC_REG, copy_u8PinId);
+	}
 	else if (copy_u8PinId <= PIND7) /* from PIND0 to PIND7  */
+	{
+		copy_u8PinId -= PIND0;
 		Local_u8PinState = GET_BIT(PIND_REG, copy_u8PinId);
-
+	}	
 	return Local_u8PinState;
 }
-
-

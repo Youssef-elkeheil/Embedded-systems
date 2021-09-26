@@ -22,6 +22,10 @@ NOTE: External capacitor must be connected at AREF pin
 1- LEFT_ADJUSTED
 2- RIGHT_ADJUSTED
 */
-#define DATA_ADJUSTMENT_MODE            RIGHT_ADJUSTED
-
+#define DATA_ADJUSTMENT_MODE            LEFT_ADJUSTED
+/* Select an option for data adjustment value:
+ * 1- _10_BITS
+ * 2- _8_BITS
+ */
+#define BITS_NO                         _10_BITS
 #endif

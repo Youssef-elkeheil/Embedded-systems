@@ -1,0 +1,220 @@
+03:06:41 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+   text	   data	    bss	    dec	    hex	filename
+   1072	     12	   1572	   2656	    a60	02_50_task2.elf
+Finished building: default.size.stdout
+ 
+Finished building: 02_50_task2.bin
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+ 
+ 
+ 
+03:10:59 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+   text	   data	    bss	    dec	    hex	filename
+   1120	     12	   1572	   2704	    a90	02_50_task2.elf
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+Finished building: default.size.stdout
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+ 
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+ 
+Finished building: 02_50_task2.bin
+ 
+ 
+03:14:19 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+   text	   data	    bss	    dec	    hex	filename
+   1120	     12	   1572	   2704	    a90	02_50_task2.elf
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+Finished building: default.size.stdout
+ 
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+Finished building: 02_50_task2.bin
+ 
+ 
+ 
+03:36:41 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:44:14: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+   44 |   if(counter &1 == 1)
+      |              ^
+../Core/Src/main.c:49:19: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+   49 |   if((counter>>1) &1 == 1)
+      |                   ^
+../Core/Src/main.c:54:19: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+   54 |   if((counter>>2) &1 == 1)
+      |                   ^
+../Core/Src/main.c:27:6: warning: unused variable 'delay' [-Wunused-variable]
+   27 |  int delay = 0;
+      |      ^~~~~
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+   text	   data	    bss	    dec	    hex	filename
+   1196	     12	   1572	   2780	    adc	02_50_task2.elf
+Finished building: default.size.stdout
+ 
+Finished building: 02_50_task2.bin
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+ 
+ 
+ 
+03:37:13 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:27:6: warning: unused variable 'delay' [-Wunused-variable]
+   27 |  int delay = 0;
+      |      ^~~~~
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+   text	   data	    bss	    dec	    hex	filename
+   1196	     12	   1572	   2780	    adc	02_50_task2.elf
+Finished building: default.size.stdout
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+ 
+Finished building: 02_50_task2.bin
+ 
+ 
+ 
+03:37:50 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+   text	   data	    bss	    dec	    hex	filename
+   1196	     12	   1572	   2780	    adc	02_50_task2.elf
+Finished building: default.size.stdout
+ 
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+Finished building: 02_50_task2.bin
+ 
+ 
+ 
+03:38:50 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+   text	   data	    bss	    dec	    hex	filename
+   1196	     12	   1572	   2780	    adc	02_50_task2.elf
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+Finished building: default.size.stdout
+ 
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+Finished building: 02_50_task2.bin
+ 
+ 
+ 
+03:41:53 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:42:9: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+   42 |   while(state =0)
+      |         ^~~~~
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+   text	   data	    bss	    dec	    hex	filename
+   1204	     12	   1572	   2788	    ae4	02_50_task2.elf
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+Finished building: default.size.stdout
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+ 
+Finished building: 02_50_task2.bin
+ 
+ 
+ 
+03:42:14 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+   text	   data	    bss	    dec	    hex	filename
+   1220	     12	   1572	   2804	    af4	02_50_task2.elf
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+Finished building: default.size.stdout
+ 
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+Finished building: 02_50_task2.bin
+ 
+ 
+ 
+03:52:28 **** Incremental Build of configuration Debug for project 02_50_task2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "02_50_task2.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\workshop\Github\Embedded-systems\Arm\02_50_task2\STM32F401CCFX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02_50_task2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02_50_task2.elf
+ 
+arm-none-eabi-size   02_50_task2.elf 
+arm-none-eabi-objdump -h -S  02_50_task2.elf  > "02_50_task2.list"
+arm-none-eabi-objcopy  -O ihex  02_50_task2.elf  "02_50_task2.hex"
+   text	   data	    bss	    dec	    hex	filename
+   1220	     12	   1572	   2804	    af4	02_50_task2.elf
+arm-none-eabi-objcopy  -O binary  02_50_task2.elf  "02_50_task2.bin"
+Finished building: default.size.stdout
+ 
+Finished building: 02_50_task2.list
+Finished building: 02_50_task2.hex
+Finished building: 02_50_task2.bin
+ 
+ 
+ 

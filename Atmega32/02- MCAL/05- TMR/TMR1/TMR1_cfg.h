@@ -1,0 +1,35 @@
+#ifndef _TMR1_CFG_H
+#define _TMR1_CFG_H
+
+/* Select the required option for Timer mode 
+ * TMR1_MODE_FAST_PWM_TOP_ICR1 - TMR1_MODE_ICU
+ */
+#define TMR1_MODE 				TMR1_MODE_ICU
+
+
+/* Select the required option for timer clock source
+ * TMR1_CLOCK_SOURCE_STOP            - TMR1_CLOCK_SOURCE_PRESCALER_1
+ * TMR1_CLOCK_SOURCE_PRESCALER_8     - TMR1_CLOCK_SOURCE_PRESCALER_64
+ * TMR1_CLOCK_SOURCE_PRESCALER_256   - TMR1_CLOCK_SOURCE_PRESCALER_1024
+ * TMR1_CLOCK_SOURCE_EXTERNAL_RISING - TMR1_CLOCK_SOURCE_EXTERNAL_FALLING
+ */
+#define TMR1_CLOCK_SOURCE       TMR1_CLOCK_SOURCE_PRESCALER_1
+
+
+/* Set the top value */
+#define TMR1_TOP_VALUE			2500
+
+
+/* Select the Required Channel to output PWM
+ * TMR1_CHANNEL_A - TMR1_CHANNEL_B
+ */
+#define TMR1_CHANNEL			TMR1_CHANNEL_A
+
+
+/* Select the Required leading edge
+ * TMR1_CHANNEL_MODE_INVERTING - TMR1_CHANNEL_MODE_NON_INVERTING 
+ */
+#define TMR1_CHANNEL_MODE 		TMR1_CHANNEL_MODE_NON_INVERTING
+
+
+#endif /* _TMR1_CFG_H */

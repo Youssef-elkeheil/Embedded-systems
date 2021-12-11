@@ -1,0 +1,18 @@
+#include "stm32f401cc_interface.h"
+
+int main(void)
+{
+	RCC_AHB1ENR   |=	2;				//GPIOB clock enable
+	GPIOB_MODER =
+	GPIOB_MODER   |= 	~(1<<2*3);		//set pin3 as input
+	GPIOB_OTYPER  &=	~(1<<2*3);		//set pin3 as push-pull
+	GPIOB_OSPEEDR &=	~(3<<2*3);		//low speed
+	int delay = 0;
+	while(1)
+	{
+		GPIOA_BSRR |= 1<<16;			//reset pin0
+		for(delay =0;delay<1000000UL;delay++);
+		GPIOA_BSRR |= 1<<0;				//set pin0
+		for(delay =0;delay<1000000UL;delay++);
+	}
+}

@@ -1,0 +1,60 @@
+#include "stm32f401cc_interface.h"
+
+#define SET_BIT(var, bit) 				var|= 1<<bit
+#define RESET_BIT(var, bit)  			var|= 1<<(bit+16)
+#define ASSIGN_2_BITS(var,bit,value)	var&=~(3<<bit*2);  \
+										var|= (value<<bit*2)
+
+#define PIN3 							(GPIOB_IDR >>3)&1
+
+int main(void)
+{
+	SET_BIT(RCC_AHB1ENR,1);				//GPIOB clock enable
+
+	ASSIGN_2_BITS(GPIOB_MODER,3,0);		// pin3 input
+	ASSIGN_2_BITS(GPIOB_MODER,5,1);		// pin5 output
+	ASSIGN_2_BITS(GPIOB_MODER,6,1);		// pin6 output
+	ASSIGN_2_BITS(GPIOB_MODER,7,1);		// pin7 output
+
+	SET_BIT(GPIOB_OTYPER, 5);			//output push-pull
+	SET_BIT(GPIOB_OTYPER, 6);
+	SET_BIT(GPIOB_OTYPER, 7);
+
+	ASSIGN_2_BITS(GPIOB_PUPDR,3,1);		//pin3 pull up
+
+	GPIOB_OSPEEDR &=	~(0xFC<<4*2);	//low speed
+
+	int delay = 0;
+	char state = PIN3;
+	unsigned char counter = 0;
+	while(1)
+	{
+
+		for(int i =0 ; i<50000 ;i++)
+		{
+			state = PIN3;
+			if(state == 0)break;
+		}
+
+		if(state == 1)
+		{
+			counter++;
+		}
+
+		if(counter &1 == 1)
+			SET_BIT(GPIOB_BSRR,5);
+		else
+			RESET_BIT(GPIOB_BSRR,5);
+
+		if((counter>>1) &1 == 1)
+			SET_BIT(GPIOB_BSRR,6);
+		else
+			RESET_BIT(GPIOB_BSRR,6);
+
+		if((counter>>2) &1 == 1)
+			SET_BIT(GPIOB_BSRR,7);
+		else
+			RESET_BIT(GPIOB_BSRR,7);
+
+	}
+}

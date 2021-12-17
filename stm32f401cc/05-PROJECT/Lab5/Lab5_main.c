@@ -1,3 +1,7 @@
+#include "GPIO.h"
+#include "KEYPAD.h"
+#include "_7Segment.h"
+
 void lab5_main(void)
 {
     HAL_7_Segment_Init(PORTA, 0);

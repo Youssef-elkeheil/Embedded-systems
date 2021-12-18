@@ -26,9 +26,9 @@
 #define OK 0
 #define NOK 1
 
-void MCAL_GPIO_Init(char port,char pin_no,char pin_dir, char state);
-unsigned char MCAL_GPIO_WritePin(char port, unsigned int pin_no, unsigned int Data);
-unsigned char MCAL_GPIO_ReadPin(char port, unsigned int pin_no);
+void MCAL_GPIO_Init(int port,char pin_no,char pin_dir, char state);
+void MCAL_GPIO_WritePin(int port, char pin_no, char Data);
+unsigned char MCAL_GPIO_ReadPin(int port, char pin_no);
 void delay_ms(int ms);
 
 #endif

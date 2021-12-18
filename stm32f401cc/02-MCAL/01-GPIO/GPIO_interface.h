@@ -1,5 +1,6 @@
 #ifndef GPIO_INTERFACE_H
 #define GPIO_INTERFACE_H
+
 /* Ports */
 #define PORTA       'A'
 #define PORTB       'B'
@@ -12,8 +13,8 @@
 
 /* Input */
 #define NO_PULL     0
-#define PULL_UP     1
-#define PULL_DOWN   2
+#define PULL_UP     2
+#define PULL_DOWN   4
 
 /* Output */
 #define PUSH_PULL   0

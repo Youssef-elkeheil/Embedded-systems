@@ -16,17 +16,17 @@
 #define AFRL_OFFSET     0x20
 #define AFRH_OFFSET     0x24
 
-#define CLOCK 0 
-#define MODER 1
-#define OTYPER 2
-#define OSPEEDR 3
-#define PUPDR 4
-#define IDR 5
-#define ODR 6
-#define BSRR 7
-#define LCKR 8
-#define AFRL 9
-#define AFRH 10
+#define CLOCK           0 
+#define MODER           1
+#define OTYPER          2
+#define OSPEEDR         3
+#define PUPDR           4
+#define IDR             5
+#define ODR             6
+#define BSRR            7
+#define LCKR            8
+#define AFRL            9
+#define AFRH            10
 
 unsigned int *LookUp[2][11] = {
     {

@@ -14,6 +14,7 @@
 #define NO_PULL     0
 #define PULL_UP     1
 #define PULL_DOWN   2
+
 /* Output */
 #define PUSH_PULL   0
 #define OPEN_DRAIN  1

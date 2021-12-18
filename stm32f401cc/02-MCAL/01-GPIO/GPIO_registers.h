@@ -1,9 +1,9 @@
 #ifndef GPIO_REGISTER_H
 #define GPIO_REGISTER_H
 
-#define GPIOA_REG(OFFSET) (unsigned int *)(0x40020000 + OFFSET)
-#define GPIOB_REG(OFFSET) (unsigned int *)(0x40020400 + OFFSET)
-#define RCC_AHB1ENR       (unsigned int *)0x40023830
+#define GPIOA_REG(OFFSET) ((unsigned int *)(0x40020000 + OFFSET))
+#define GPIOB_REG(OFFSET) ((unsigned int *)(0x40020400 + OFFSET))
+#define RCC_AHB1ENR       ((unsigned int *)0x40023830)
 
 #define MODER_OFFSET    0x00
 #define OTYPER_OFFSET   0x04

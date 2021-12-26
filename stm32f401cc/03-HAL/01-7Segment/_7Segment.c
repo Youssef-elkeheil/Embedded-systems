@@ -1,5 +1,5 @@
-#include <_7Segment.h>
-#include "GPIO.h"
+#include "_7Segment.h"
+#include "GPIO_interface.h"
 
 void HAL_7_Segment_Init(char port, char start)
 {

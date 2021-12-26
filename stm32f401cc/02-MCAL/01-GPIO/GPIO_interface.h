@@ -2,8 +2,12 @@
 #define GPIO_INTERFACE_H
 
 /* Ports */
-#define PORTA       'A'
-#define PORTB       'B'
+#define PORTA       0
+#define PORTB       1
+#define PORTC       2
+#define PORTD       3
+#define PORTE       4
+#define PORTH       7
 
 /* Pin Direction */
 #define INPUT       0
@@ -23,7 +27,7 @@
 /* Pin value */
 #define LOW 0
 #define HIGH 1
-
+#define TOGGLE 2
 /* function state */
 #define OK 0
 #define NOK 1

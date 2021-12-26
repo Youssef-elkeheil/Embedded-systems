@@ -7,8 +7,6 @@
 
 void MCAL_GPIO_Init(int Port, char pin_no, char Direction, char state)
 {
-    Port -= 'A'; //   User enters 'A' or 'B' --> *LookUp[0][reg] or * LookUp[1][reg]
-
     *LookUp[Port][CLOCK]|= 1<<Port; // Enable Clock
     
     *LookUp[Port][MODER] &= ~(0X03 << (2 * pin_no));    
@@ -27,26 +25,33 @@ void MCAL_GPIO_Init(int Port, char pin_no, char Direction, char state)
 
 void MCAL_GPIO_WritePin(int Port, char pin_no, char Data)
 {
-    Port -= 'A';
-    if (Data)
+
+    switch (Data)
     {
-        *LookUp[Port][ODR] |= (0x01<<pin_no);
-    }
-    else
-    {
+    case TOGGLE:
+        *LookUp[Port][ODR] ^= (0x01 << pin_no);
+        break;
+    case HIGH:
+        *LookUp[Port][ODR] |= (0x01 << pin_no);
+        break;
+    case LOW:
         *LookUp[Port][ODR] &= ~(0x01 << pin_no);
+        break;
+
+    default:
+        break;
     }
 }
-
 
 unsigned char MCAL_GPIO_ReadPin(int Port, char pin_no)
 {
-    Port-='A';
+
     return (*LookUp[Port][IDR] >> (pin_no)) & 0X01;
 }
-
 
 void delay_ms(int ms)
 {
 	for(int i=0;i<ms*1000;i++);
 }
+
+

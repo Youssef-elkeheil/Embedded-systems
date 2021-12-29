@@ -3,60 +3,50 @@
 #include "EXTI_private.h"
 #include "../01-GPIO/GPIO_interface.h"
 
-void (*GLOBAL_ISR0_FunctionExcution)(void) = (void *)0x00;
-void (*GLOBAL_ISR1_FunctionExcution)(void) = (void *)0x00;
-void (*GLOBAL_ISR2_FunctionExcution)(void) = (void *)0x00;
-void (*GLOBAL_ISR3_FunctionExcution)(void) = (void *)0x00;
+void (*GLOBAL_ISR_Excution[4])(void) = {(void *)0x00};
 
-/* for EXTI 0 -> 3*/
-void MCAL_EXTI0_3_Init(int Port, char EXTx, char state, void (*Local_ISR_FunctionLogic)(void))
+void MCAL_EXTI0_3_Init(char Port, int EXTx, char state, void (*Local_ISR_Logic)(void))
 {
-    switch (EXTx)
-    {
-    case 0:
-        GLOBAL_ISR0_FunctionExcution = Local_ISR_FunctionLogic;
-        break;
-    case 1:
-        GLOBAL_ISR1_FunctionExcution = Local_ISR_FunctionLogic;
-        break;
-    case 2:
-        GLOBAL_ISR2_FunctionExcution = Local_ISR_FunctionLogic;
-        break;
-    case 3:
-        GLOBAL_ISR3_FunctionExcution = Local_ISR_FunctionLogic;
-        break;
-    default:
-        return;
-        break;
-    }
+    GLOBAL_ISR_Excution[EXTx] = Local_ISR_Logic;
     RCC_APB2RSTR |=1<<14;
     SYSCFG_EXTICR(1) |= Port<<(4*EXTx);
     EXTI_IMR |=(1<<EXTx);
-    EXTI_RTSR |= ((RISING(state))<< EXTx);
-    EXTI_FTSR |= ((FALLING(state))<<EXTx);
-    NVIC_ISER(EXTx)|=1<<(6+EXTx);
+    EXTI_RTSR |= ((RISING_MASK(state)) << EXTx);
+    EXTI_FTSR |= ((FALLING_MASK(state)) << EXTx);
+    NVIC_ISER(0)|=1<<(6+EXTx);
+    
+}
+
+void MCAL_EXTI_Enable(char EXTx)
+{
+    EXTI_IMR |= (1 << EXTx);
+}
+
+void MCAL_EXTI_Disable(char EXTx)
+{
+    EXTI_IMR &= ~(1 << EXTx);
 }
 
 void EXTI0_IRQHandler(void)
 {
     EXTI_PR=(1<<0);
-    GLOBAL_ISR0_FunctionExcution();
+    GLOBAL_ISR_Excution[0]();
 }
 
 void EXTI1_IRQHandler(void)
 {
     EXTI_PR = (1 << 1);
-    GLOBAL_ISR1_FunctionExcution();
+    GLOBAL_ISR_Excution[1]();
 }
 
 void EXTI2_IRQHandler(void)
 {
     EXTI_PR = (1 << 2);
-    GLOBAL_ISR2_FunctionExcution();
+    GLOBAL_ISR_Excution[2]();
 }
 
 void EXTI3_IRQHandler(void)
 {
     EXTI_PR = (1 << 3);
-    GLOBAL_ISR3_FunctionExcution();
+    GLOBAL_ISR_Excution[3]();
 }

@@ -1,7 +1,8 @@
+#include "../01-GPIO/GPIO_interface.h"
+
 #include "EXTI_interface.h"
 #include "EXTI_registers.h"
 #include "EXTI_private.h"
-#include "../01-GPIO/GPIO_interface.h"
 
 void (*GLOBAL_ISR_Excution[4])(void) = {(void *)0x00};
 

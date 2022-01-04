@@ -6,7 +6,7 @@
 
 MCAL_USART2_Init(char port, char pin_no, char mode);
 void MCAL_USART2_Send(char *String);
-void MCAL_USART2_Recieve(void);
+
 
 
 #endif

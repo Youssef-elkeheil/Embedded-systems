@@ -13,7 +13,7 @@ void MCAL_USART2_Init(char port,char pin_no,char mode)
     MCAL_GPIO_Init(port, pin_no,ALTERNATE,AF7);
     USART2_CR1 |= ((mode & Rx_MASK) << 2) | ((mode & Tx_MASK) << 2) | (1 << 13);
     USART2_BRR |= BAUD_RATE_9600;
-    USART2_CR2&=~(1<<12);
+    USART2_CR2|=(1<<12);
     
 }
 void MCAL_USART2_Send( char* String)

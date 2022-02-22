@@ -5,65 +5,71 @@
 #include "util/delay.h"
 
 #include "KEYPAD_interface.h"
-#include "KEYPAD_private.h"
 #include "KEYPAD_config.h"
+#include "KEYPAD_private.h"
 
-typedef unsigned short int u32;
+s8 KeypadState = KEYPAD_NOTPRESSED;
+s8 Global_u8PressedKey = 0;
 
-void HKEYPAD_voidInitialize (void)
+void HKEYPAD_voidInitialize(void)
 {
 	/* for pull up */
-	MDIO_voidSetPinDirection(KEYPAD_PORT, KEYPAD_R1, INPUT);
-	MDIO_voidSetPinDirection(KEYPAD_PORT, KEYPAD_R2, INPUT);
-	MDIO_voidSetPinDirection(KEYPAD_PORT, KEYPAD_R3, INPUT);
-	MDIO_voidSetPinDirection(KEYPAD_PORT, KEYPAD_R4, INPUT);
-
+	for(s8 row = START_ROW; row !=(END_ROW + UPDATE_ROW) ;row+=UPDATE_ROW )
+	{
+		MDIO_voidSetPinDirection(KEYPAD_ROW_PORT, row, INPUT);
+		MDIO_voidSetPinValue(KEYPAD_ROW_PORT, row, HIGH);
+	}
 	/* to be disabled */
-	MDIO_voidSetPinDirection(KEYPAD_PORT, KEYPAD_C1, OUTPUT);
-	MDIO_voidSetPinDirection(KEYPAD_PORT, KEYPAD_C2, OUTPUT);
-	MDIO_voidSetPinDirection(KEYPAD_PORT, KEYPAD_C3, OUTPUT);
-	MDIO_voidSetPinDirection(KEYPAD_PORT, KEYPAD_C4, OUTPUT);
+	for (s8 col = START_COL; col != (END_COL + UPDATE_COL); col += UPDATE_COL)
+	{
+		MDIO_voidSetPinDirection(KEYPAD_COL_PORT, col, OUTPUT);
+		MDIO_voidSetPinValue(KEYPAD_COL_PORT, col, HIGH);
+		
+	}
+}
+void HKEYPAD_voidManage(void (*local_CallOutHandler)(void))
+{
+	s8 row, column, row_flag, column_flag;
+	if (KeypadState == KEYPAD_NOTPRESSED)
+	{
+		for (column = START_COL; column != (END_COL + UPDATE_COL); column += UPDATE_COL)
+		{
+			MDIO_voidSetPinValue(KEYPAD_COL_PORT, column, LOW);
+			for (row = START_ROW; row != (END_ROW + UPDATE_ROW); row += UPDATE_ROW)
+			{
+				if (MDIO_u8GetPinValue(KEYPAD_ROW_PORT, row) == LOW)
+				{
+					_delay_ms(30);
+					if (MDIO_u8GetPinValue(KEYPAD_ROW_PORT, row) == LOW)
+					{
+						KeypadState = KEYPAD_PRESSED;
+						Global_u8PressedKey = Global_u8KeypadKeys[SELECTED_ROW][SELECTED_COL];
+						local_CallOutHandler();
+						row_flag = row;
+						column_flag = column;
+						return;
+					}
+				}
+			}
+			MDIO_voidSetPinValue(KEYPAD_COL_PORT, column, HIGH);
+		}
+	}
+	else
+	{
+		if (MDIO_u8GetPinValue(KEYPAD_ROW_PORT, row_flag) == HIGH)
+		{
+			_delay_ms(30);
 
-	MDIO_voidSetPortValue(KEYPAD_PORT, HIGH);
+			if (MDIO_u8GetPinValue(KEYPAD_ROW_PORT, row_flag) == HIGH)
+			{
+				KeypadState = KEYPAD_NOTPRESSED;
+				MDIO_voidSetPinValue(KEYPAD_COL_PORT, column_flag, HIGH);
+			}
+		}
+	}
 }
 
 u8   HKEYPAD_u8GetPressedKey (void)
 {
-	u8 flag = 0;
-	u8 Local_u8PressedKey=0;
-	u8 row, column;
-	u8 Local_u8KeypadKeys[4][4] = {
-			{'1', '2', '3' , '+'},
-			{'4', '5', '6', '-'},
-			{'7', '8', '9', '/'},
-			{'*', '0', '#', '='}
-	};
-	while(1)
-	{
-		for(column=4; column<8; column++)
-		{
-			MDIO_voidSetPinValue(KEYPAD_PORT, column, LOW);
-			for(row=0; row<4; row++)
-			{
-				if(MDIO_u8GetPinValue(KEYPAD_PORT, row) == 0)
-				{
-					Local_u8PressedKey = Local_u8KeypadKeys[row][column-4];
-					while(MDIO_u8GetPinValue(KEYPAD_PORT, row) == 0);
-					_delay_ms(30);
-					flag = 1;
-					break;
-				}
-			}
-			if(flag == 1)
-			{
-				break;
-			}
-			MDIO_voidSetPinValue(KEYPAD_PORT, column, HIGH);
-		}
-		if(flag == 1)
-		{
-			break;
-		}
-	}
-	return Local_u8PressedKey;
+	return Global_u8PressedKey;
 }

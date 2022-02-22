@@ -1,139 +1,211 @@
 #include "../../01- LIB/STD_TYPES.h"
 #include "../../01- LIB/BIT_MATH.h"
-
 #include "../../02- MCAL/01- DIO/DIO_interface.h"
-#include <util/delay.h>
 
 #include "LCD_interface.h"
+#include "LCD_private.h"
+#include "LCD_config.h"
+
+#include <util/delay.h>
+#include <stdlib.h>
+static u8 Global_CursorState = 0, Global_BlinkState = 0;
+
+static void HLCD_voidSendData(u8 copy_u8Data)
+{
+#if LCD_DL == LCD_8_BIT_MODE
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB0, GET_BIT(copy_u8Data, 0));
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB1, GET_BIT(copy_u8Data, 1));
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB2, GET_BIT(copy_u8Data, 2));
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB3, GET_BIT(copy_u8Data, 3));
+#elif LCD_DL == LCD_4_BIT_MODE
+	/* get the last 4 bits of data */
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB4, GET_BIT(copy_u8Data, 4));
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB5, GET_BIT(copy_u8Data, 5));
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB6, GET_BIT(copy_u8Data, 6));
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB7, GET_BIT(copy_u8Data, 7));
+	/* EN = 1 */
+	MDIO_voidSetPinValue(LCD_COMMAND_PORT, LCD_EN, HIGH);
+	_delay_ms(1);
+	/* EN = 0 */
+	MDIO_voidSetPinValue(LCD_COMMAND_PORT, LCD_EN, LOW);
+	_delay_ms(2);
+	/* get the first 4 bits of data */
+	copy_u8Data <<= 4;
+#endif
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB4, GET_BIT(copy_u8Data, 4));
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB5, GET_BIT(copy_u8Data, 5));
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB6, GET_BIT(copy_u8Data, 6));
+	MDIO_voidSetPinValue(LCD_DATA_PORT, LCD_DB7, GET_BIT(copy_u8Data, 7));
+
+	/* EN = 1 */
+	MDIO_voidSetPinValue(LCD_COMMAND_PORT, LCD_EN, HIGH);
+	_delay_ms(1);
+	/* EN = 0 */
+	MDIO_voidSetPinValue(LCD_COMMAND_PORT, LCD_EN, LOW);
+	_delay_ms(2);
+}
+
+static void HLCD_voidSendCommand(u8 copy_u8Command)
+{
+	/* RS = 0 */
+	MDIO_voidSetPinValue(LCD_COMMAND_PORT, LCD_RS, LOW);
+	/* RW = 0 */
+	MDIO_voidSetPinValue(LCD_COMMAND_PORT, LCD_RW, LOW);
+	/* Send data */
+	HLCD_voidSendData(copy_u8Command);
+}
 
 void HLCD_voidInitialize(void)
 {
 	// set used pins to output
-	MDIO_voidSetPinDirection(LCD_RS, OUTPUT);
-	MDIO_voidSetPinDirection(LCD_RW, OUTPUT);
-	MDIO_voidSetPinDirection(LCD_EN, OUTPUT);
-	MDIO_voidSetPinDirection(LCD_DB4, OUTPUT);
-	MDIO_voidSetPinDirection(LCD_DB5, OUTPUT);
-	MDIO_voidSetPinDirection(LCD_DB6, OUTPUT);
-	MDIO_voidSetPinDirection(LCD_DB7, OUTPUT);
-
+	MDIO_voidSetPinDirection(LCD_COMMAND_PORT, LCD_RS, OUTPUT);
+	MDIO_voidSetPinDirection(LCD_COMMAND_PORT, LCD_RW, OUTPUT);
+	MDIO_voidSetPinDirection(LCD_COMMAND_PORT, LCD_EN, OUTPUT);
+#if LCD_DL == LCD_8_BIT_MODE
+	MDIO_voidSetPortDirection(LCD_DATA_PORT, PORT_OUTPUT);
+#elif LCD_DL == LCD_4_BIT_MODE
+	MDIO_voidSetPinDirection(LCD_DATA_PORT, LCD_DB4, OUTPUT);
+	MDIO_voidSetPinDirection(LCD_DATA_PORT, LCD_DB5, OUTPUT);
+	MDIO_voidSetPinDirection(LCD_DATA_PORT, LCD_DB6, OUTPUT);
+	MDIO_voidSetPinDirection(LCD_DATA_PORT, LCD_DB7, OUTPUT);
+#endif
 	_delay_ms(40); /* LCD Power ON delay always >30ms */
 
-	HLCD_voidSendCommand(FUN_SET_4BITS_MODE); /* Send for 4 bit initialization of LCD  */
-	HLCD_voidSendCommand(FUN_SET);			 /* 2 line, 5*7 matrix in 4-bit mode */
+	/* Return Home  */
+	HLCD_voidSendCommand(LCD_RETURN_HOME);
+	_delay_ms(1);
 
+	/* Function Set  */
+	HLCD_voidSendCommand(LCD_FUNCTION_SET);
 	_delay_ms(1);
-	HLCD_voidSendCommand(LCD_DISPLAY_MODE);
-	HLCD_voidSendCommand(LCD_DISPLAY_ON);   /* Display on cursor off */
-	_delay_ms(1);
-	
-	HLCD_voidSendCommand(LCD_DISPLAY_MODE);
-	HLCD_voidSendCommand(LCD_CLEAR); /* Clear display screen */
 
+	/* Initialize Display */
+	HLCD_voidSendCommand(LCD_DISPLAY_INIT);
 	_delay_ms(1);
-	HLCD_voidSendCommand(LCD_DISPLAY_MODE);
+
+	/* Clear display screen */
+	HLCD_voidSendCommand(LCD_CLEAR);
+	_delay_ms(2);
+
 	HLCD_voidSendCommand(LCD_ENTRY_MODE); /* Increment cursor (shift cursor to right) */
 }
 
-void HLCD_voidSendCommand(u8 copy_u8Command)
-{
-
-	/* RS = 0 */
-	MDIO_voidSetPinValue(LCD_RS, LOW);
-	/* RW = 0 */
-	MDIO_voidSetPinValue(LCD_RW, LOW);
-	/* EN = 1 */
-	MDIO_voidSetPinValue(LCD_EN, HIGH);
-
-	MDIO_voidSetPinValue(LCD_DB4, GET_BIT(copy_u8Command, 0));
-	MDIO_voidSetPinValue(LCD_DB5, GET_BIT(copy_u8Command, 1));
-	MDIO_voidSetPinValue(LCD_DB6, GET_BIT(copy_u8Command, 2));
-	MDIO_voidSetPinValue(LCD_DB7, GET_BIT(copy_u8Command, 3));
-
-	/* EN = 0 */
-	MDIO_voidSetPinValue(LCD_EN, LOW);
-	_delay_ms(1);
-	MDIO_voidSetPinValue(LCD_EN, HIGH);
-	_delay_ms(2);
-}
-
-void HLCD_voidSendChar(u8 copy_u8_Data)
+void HLCD_voidSendChar(char copy_s8_Data)
 {
 	/* Set RS to HIGH */
-	MDIO_voidSetPinValue(LCD_RS, HIGH);
-
+	MDIO_voidSetPinValue(LCD_COMMAND_PORT, LCD_RS, HIGH);
 	/* Set R/W to LOW */
-	MDIO_voidSetPinValue(LCD_RW, LOW);
-
-	/* Set E to HIGH */
-	MDIO_voidSetPinValue(LCD_EN, HIGH);
-
-	/* Load Command on Data bus */
-	MDIO_voidSetPinValue(LCD_DB4, GET_BIT(copy_u8Command, 0));
-	MDIO_voidSetPinValue(LCD_DB5, GET_BIT(copy_u8Command, 1));
-	MDIO_voidSetPinValue(LCD_DB6, GET_BIT(copy_u8Command, 2));
-	MDIO_voidSetPinValue(LCD_DB7, GET_BIT(copy_u8Command, 3));
-
-	/* Set E to LOW */
-	MDIO_voidSetPinValue(LCD_EN, LOW);
-
-	/* Wait for E to settle */
-	_delay_ms(1);
-
-	/* Set E to HIGH */
-	MDIO_voidSetPinValue(LCD_EN, HIGH);
-
-	/* Delay to let the LCD Display the character */
-	_delay_ms(2);
+	MDIO_voidSetPinValue(LCD_COMMAND_PORT, LCD_RW, LOW);
+	/* Send data */
+	HLCD_voidSendData(copy_s8_Data);
 }
 
-void HLCD_voidSendString(u8 *ptr_u8_String)
+void HLCD_voidCreateChar(u8 copy_CharLocation, u8 copy_RowsOfChar[])
 {
-	/* Local loop index */
-	u8 u8Index = 0;
-	while (ptr_u8_String[u8Index] != '\0')
+	u8 local_counter;
+	/*DDRAM-->CGRAM*/
+	HLCD_voidSendCommand(64 + 8 * copy_CharLocation);
+	for (local_counter = 0; local_counter < 8; local_counter++)
+	{
+		HLCD_voidSendChar(copy_RowsOfChar[local_counter]);
+	}
+	/*CGRAM-->DDRAM*/
+	HLCD_voidSendCommand(128);
+	_delay_ms(5);
+}
+
+void HLCD_voidSendString(char *ptr_s8_String)
+{
+	while (*ptr_s8_String != '\0')
 	{
 		/* Write Character on LCD */
-		HLCD_voidSendChar(ptr_u8_String[u8Index]);
-
-		/* Increment local loop index */
-		u8Index++;
-
+		HLCD_voidSendChar(*ptr_s8_String);
+		ptr_s8_String++;
 		/* Delay to let the LCD show the character */
 		_delay_ms(2);
 	}
 }
 
-void HLCD_voidClearScreen()
+void HLCD_voidClearScreen(void)
 {
-	HLCD_voidSendCommand(LCD_DISPLAY_MODE);
 	HLCD_voidSendCommand(LCD_CLEAR);
+	_delay_ms(5);
 }
 
-void HLCD_voidGotoRawCol(u8 copy_u8_RawID, u8 copy_u8_ColID)
+void HLCD_voidSetCursor(u8 copy_u8Raw, u8 copy_u8Col)
 {
-	u8 local_u8_Address;
-	switch (copy_u8_RawID)
+	HLCD_voidSendCommand((copy_u8Col) + LCD_Col_OFFSET + LCD_ROW_OFFSET * (copy_u8Raw));
+	_delay_ms(1);
+}
+
+void HLCD_voidSendNumber(float_64 copy_f64_Number)
+{
+	char local_strNumber[16] = {0};
+	char local_strRemainder[3] = {0};
+	sint_64 local_intvalue = (copy_f64_Number * 100);
+	/* Ex: let copy_u8_Number = 75.25
+	 * 	local_intvalue = 7525
+	 * 	local_intvalue%100 = 25 // remainder
+	 * */
+	itoa(local_intvalue / 100, local_strNumber, 10);
+	HLCD_voidSendString(local_strNumber);
+	switch (local_intvalue % 100)
 	{
+	default:
+		HLCD_voidSendChar('.');
+		// print the remainder
+		itoa(local_intvalue % 100, local_strRemainder, 10);
+		HLCD_voidSendString(local_strRemainder);
+		break;
 	case 0:
-		local_u8_Address = copy_u8_ColID;
-		break;
-	case 1:
-		local_u8_Address = copy_u8_ColID + 0x40;
-		break;
-	case 2:
-		local_u8_Address = copy_u8_ColID + 0x10;
-		break;
-	case 3:
-		local_u8_Address = copy_u8_ColID + 0x50;
-		break;
+		return;
 	}
-	HLCD_voidSendCommand(local_u8_Address | LCD_CURSOR_OFFSET);
 }
 
-void HLCD_voidDisplayNumber(u8 copy_u8_Number)
+void HLCD_voidCursorEnable(void)
 {
-	s8 *localPtr_str[16] = {0};
-	itoa(copy_u8_Number, (s8 *)localPtr_str, 10);
-	HLCD_voidSendString((u8 *)localPtr_str);
+	Global_CursorState = 2;
+	HLCD_voidSendCommand(LCD_DISPLAY_INIT | Global_CursorState | Global_BlinkState);
+	_delay_ms(1);
+}
+
+void HLCD_voidCursorDisable(void)
+{
+	Global_CursorState = 0;
+	HLCD_voidSendCommand(LCD_DISPLAY_INIT | Global_CursorState | Global_BlinkState);
+	_delay_ms(1);
+}
+
+void HLCD_voidBlinkEnable(void)
+{
+	Global_BlinkState = 1;
+	HLCD_voidSendCommand(LCD_DISPLAY_INIT | Global_CursorState | Global_BlinkState);
+	_delay_ms(1);
+}
+
+void HLCD_voidBlinkDisable(void)
+{
+	Global_BlinkState = 0;
+	HLCD_voidSendCommand(LCD_DISPLAY_INIT | Global_CursorState | Global_BlinkState);
+	_delay_ms(1);
+}
+
+void HLCD_voidDisplayEnable(void)
+{
+	HLCD_voidSendCommand(LCD_DISPLAY_INIT | Global_CursorState | Global_BlinkState);
+}
+
+void HLCD_voidDisplayDisable(void)
+{
+	HLCD_voidSendCommand(LCD_DISPLAY_OFF);
+}
+
+void HLCD_voidShiftRight(void)
+{
+	HLCD_voidSendCommand(LCD_SHIFT_RIGHT);
+}
+
+void HLCD_voidShiftLeft(void)
+{
+	HLCD_voidSendCommand(LCD_SHIFT_LEFT);
 }

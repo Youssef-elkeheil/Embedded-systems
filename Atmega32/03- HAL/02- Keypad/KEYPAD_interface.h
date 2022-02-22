@@ -2,6 +2,7 @@
 #define KEYPAD_INTERFACE_H
 
 void HKEYPAD_voidInitialize (void);
-u8   HKEYPAD_u8GetPressedKey (void);
+void HKEYPAD_voidManage(void (*ptr_CallBackHandler)(void));
+u8 HKEYPAD_u8GetPressedKey(void);
 
 #endif

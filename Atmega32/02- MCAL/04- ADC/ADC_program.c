@@ -1,3 +1,6 @@
+#include "../../01- LIB/BIT_MATH.h"
+#include "../../01- LIB/STD_TYPES.h"
+
 #include "ADC_interface.h"
 #include "ADC_private.h"
 #include "ADC_register.h"
@@ -7,7 +10,7 @@
 /* hold the address of the function to be called back */
 static void (*G_ptr_AdcIsrNotification)(void) = NULL;
 /* hold the address of result to be updated */
-static u16 *G_Ptr_AdcReading = NULL;
+static uint_16 *G_Ptr_AdcReading = NULL;
 
 void MADC_voidInit(void)
 {
@@ -20,7 +23,7 @@ void MADC_voidInit(void)
     SET_BIT(ADCSRA_REG, ADEN);              //ENABLE ADC
 }
 
-u16 MADC_u8GetChannelValue(u8 copy_Channel_ID)
+uint_16 MADC_uint_16GetChannelValue(u8 copy_Channel_ID)
 {
     /* Select the specified Channel */
     ADMUX_REG &= CHANNEL_MASK;
@@ -43,7 +46,7 @@ u16 MADC_u8GetChannelValue(u8 copy_Channel_ID)
     #endif
 }
 /* It enables ADC ISR and it is the registeration function at the same time */
-void MADC_voidReadDigital_Async(u8 copy_Channel_ID,u16 *ptr_u16_ReturnedResult,
+void MADC_voidReadDigital_Async(u8 copy_Channel_ID,uint_16 *ptr_u16_ReturnedResult,
                                  void (*ptr_AdcIsrFuncLogic)(void))
 {
     /* Initialize the global pointer to variable with 

@@ -1,8 +1,0 @@
-{
-    "C_Cpp.errorSquiggles": "Disabled",
-    "files.associations": {
-        "std_types.h": "c",
-        "dio_interface_1.h": "c",
-        "stdio.h": "c"
-    }
-}

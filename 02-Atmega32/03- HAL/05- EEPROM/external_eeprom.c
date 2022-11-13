@@ -4,13 +4,13 @@
 #include "../../02- MCAL/06- TWI/TWI_interface.h"
 #include "external_eeprom.h"
 
-void EEPROM_init(void)
+void H_EEPROM_init(void)
 {
 	/* just initialize the I2C(TWI) module inside the MC */
 	TWI_init();
 }
 
-uint_8 EEPROM_writeByte(uint_16 u16address, uint_8 u8data)
+uint_8 H_EEPROM_writeByte(uint_16 u16address, uint_8 u8data)
 {
 	/* Send the Start Bit */
     TWI_start();
@@ -39,7 +39,7 @@ uint_8 EEPROM_writeByte(uint_16 u16address, uint_8 u8data)
     return SUCCESS;
 }
 
-uint_8 EEPROM_readByte(uint_16 u16address, uint_8 *u8data)
+uint_8 H_EEPROM_readByte(uint_16 u16address, uint_8 *u8data)
 {
 	/* Send the Start Bit */
     TWI_start();

@@ -1,9 +1,10 @@
 #ifndef _SCH_PRIVATE_H
 #define _SCH_PRIVATE_H
 
+#include "SCH_config.h"
 typedef struct 
 {
-    u16 periodicity;
+    uint_16 periodicity;
     void (* taskFunc) (void);
 }task_t;
  

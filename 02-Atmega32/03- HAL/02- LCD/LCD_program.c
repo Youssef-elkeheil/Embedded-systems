@@ -8,7 +8,7 @@
 #include "LCD_config.h"
 
 #include "util/delay.h"
-#include "stdlib.h"
+// #include "stdlib.h"
 static uint_8 Global_CursorState = 0, Global_BlinkState = 0;
 
 static void HLCD_voidSendData(uint_8 copy_u8Data)
@@ -142,7 +142,6 @@ void HLCD_voidSetCursor(uint_8 copy_u8Raw, uint_8 copy_u8Col)
 void HLCD_voidSendNumber(float_64 copy_f64_Number)
 {
 	char local_strNumber[16] = {0};
-	char local_strRemainder[3] = {0};
 	sint_64 local_intvalue = (copy_f64_Number * 100);
 	/* Ex: let copy_u8_Number = 75.25
 	 * 	local_intvalue = 7525
@@ -155,8 +154,8 @@ void HLCD_voidSendNumber(float_64 copy_f64_Number)
 	default:
 		HLCD_voidSendChar('.');
 		// print the remainder
-		itoa(local_intvalue % 100, local_strRemainder, 10);
-		HLCD_voidSendString(local_strRemainder);
+		itoa(local_intvalue % 100, local_strNumber, 10);
+		HLCD_voidSendString(local_strNumber);
 		break;
 	case 0:
 		return;
